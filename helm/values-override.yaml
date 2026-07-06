@@ -27,6 +27,11 @@ components:
     imageOverride:
       repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/frontend"
       tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+    # Upstream chart default sets SHIPPING_ADDR with an http:// scheme, but the frontend's
+    # gRPC client (Shipping.gateway.ts) expects a bare host:port and fails checkout otherwise.
+    envOverrides:
+      - name: SHIPPING_ADDR
+        value: shipping:8080
   load-generator:
     imageOverride:
       repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/loadgenerator"
