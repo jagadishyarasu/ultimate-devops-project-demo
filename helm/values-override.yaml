@@ -19,6 +19,11 @@ components:
     imageOverride:
       repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/checkoutservice"
       tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+    # Same issue as frontend: checkoutservice's gRPC client (grpc.NewClient in main.go)
+    # also rejects the http:// scheme in the chart's default SHIPPING_ADDR.
+    envOverrides:
+      - name: SHIPPING_ADDR
+        value: shipping:8080
   currency:
     imageOverride:
       repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/currencyservice"
