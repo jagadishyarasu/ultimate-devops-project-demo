@@ -8,7 +8,7 @@
 #include <grpc/health/v1/health.grpc.pb.h>
 
 #include "opentelemetry/trace/context.h"
-#include "opentelemetry/trace/semantic_conventions.h"
+#include "opentelemetry/semconv/incubating/rpc_attributes.h"
 #include "opentelemetry/trace/span_context_kv_iterable_view.h"
 #include "opentelemetry/baggage/baggage.h"
 #include "opentelemetry/nostd/string_view.h"
@@ -39,6 +39,7 @@ using SpanContext = opentelemetry::trace::SpanContext;
 using namespace opentelemetry::trace;
 using namespace opentelemetry::baggage;
 namespace context = opentelemetry::context;
+namespace SemanticConventions = opentelemetry::semconv::rpc;
 
 namespace metrics_api = opentelemetry::metrics;
 namespace nostd       = opentelemetry::nostd;
