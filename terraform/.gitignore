@@ -7,3 +7,6 @@ override.tf
 override.tf.json
 .terraformrc
 terraform.rc
+tfplan*
+tf-debug.log
+tf-plan-stdout.log
