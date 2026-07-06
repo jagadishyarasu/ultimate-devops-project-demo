@@ -1,0 +1,75 @@
+name: Build and Push Images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "terraform/**"
+      - ".github/workflows/build-and-push.yml"
+
+permissions:
+  id-token: write   # required for OIDC
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - service: frontend
+            dockerfile: src/frontend/Dockerfile
+          - service: cartservice
+            dockerfile: src/cart/src/Dockerfile
+          - service: checkoutservice
+            dockerfile: src/checkout/Dockerfile
+          - service: paymentservice
+            dockerfile: src/payment/Dockerfile
+          - service: currencyservice
+            dockerfile: src/currency/Dockerfile
+            build_args: OPENTELEMETRY_CPP_VERSION=1.23.0
+          - service: shippingservice
+            dockerfile: src/shipping/Dockerfile
+          - service: productcatalogservice
+            dockerfile: src/product-catalog/Dockerfile
+          - service: recommendationservice
+            dockerfile: src/recommendation/Dockerfile
+          - service: adservice
+            dockerfile: src/ad/Dockerfile
+            build_args: OTEL_JAVA_AGENT_VERSION=2.20.1
+          - service: frauddetectionservice
+            dockerfile: src/fraud-detection/Dockerfile
+            build_args: OTEL_JAVA_AGENT_VERSION=2.20.1
+          - service: accountingservice
+            dockerfile: src/accounting/Dockerfile
+          - service: quoteservice
+            dockerfile: src/quote/Dockerfile
+          - service: loadgenerator
+            dockerfile: src/load-generator/Dockerfile
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push
+        env:
+          REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          REPO: otel-demo/${{ matrix.service }}
+          TAG: ${{ github.sha }}
+          BUILD_ARGS: ${{ matrix.build_args }}
+        run: |
+          BUILD_ARG_FLAGS=""
+          if [ -n "$BUILD_ARGS" ]; then
+            BUILD_ARG_FLAGS="--build-arg $BUILD_ARGS"
+          fi
+          docker build $BUILD_ARG_FLAGS -t $REGISTRY/$REPO:$TAG -f ${{ matrix.dockerfile }} .
+          docker push $REGISTRY/$REPO:$TAG
