@@ -30,7 +30,7 @@ components:
   load-generator:
     imageOverride:
       repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/loadgenerator"
-      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+      tag: "1970d51d83ba5a1b15f55edd2ce69b53663f0039"
   payment:
     imageOverride:
       repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/paymentservice"
