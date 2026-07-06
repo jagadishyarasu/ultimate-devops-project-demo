@@ -1,0 +1,57 @@
+# Per-component image overrides pointing at our own ECR repos.
+# Only the services built by .github/workflows/build-and-push.yml are overridden here;
+# everything else (email, frontend-proxy, image-provider, flagd-ui, etc.) keeps the
+# chart's default upstream ghcr.io/open-telemetry/demo image since we don't build it.
+components:
+  accounting:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/accountingservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  ad:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/adservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  cart:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/cartservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  checkout:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/checkoutservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  currency:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/currencyservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  frontend:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/frontend"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  load-generator:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/loadgenerator"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  payment:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/paymentservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  product-catalog:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/productcatalogservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  quote:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/quoteservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  recommendation:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/recommendationservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  shipping:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/shippingservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
+  fraud-detection:
+    imageOverride:
+      repository: "515966515841.dkr.ecr.us-east-1.amazonaws.com/otel-demo/frauddetectionservice"
+      tag: "8f273ea871e86efabb75b659512b0e13c99e3d33"
